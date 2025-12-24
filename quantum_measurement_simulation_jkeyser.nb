@@ -1,0 +1,1061 @@
+Notebook[{Cell[
+BoxData[""],"Input",ExpressionUUID -> "b694b820-52ff-46b4-a3ab-e96a5b10d020"],Cell[
+CellGroupData[
+{Cell[
+BoxData[{RowBox[{"\n",RowBox[{"(*"," ",RowBox[{"ProbRandGen",":"," ",RowBox[
+{"Picks"," ","a"," ","measurement"," ","outcome"," ","randomly"," ","using"," ","the"," ","probabilities"}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{"ProbRandGen","[","probabilities_List","]"}]," ",":="," ",RowBox[{"Module","[","\n","  ",RowBox[
+{RowBox[{"{",RowBox[{"r",","," ","s",","," ","j",","," ",RowBox[{"n"," ","="," ",RowBox[
+{"Length","[","probabilities","]"}]}],","," ","probs"}],"}"}],",","\n","\[NonBreakingSpace]","\n","\[NonBreakingSpace]\[NonBreakingSpace]","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Convert"," ","nested"," ","matrices"," ","like"," ",RowBox[
+{"{",RowBox[{"{",RowBox[{"1","/","3"}],"}"}],"}"}]}]," ","->"," ",RowBox[{"1","/","3"}]}]," ","*)"}],"\n","  ",RowBox[
+{RowBox[{"probs"," ","="," ",RowBox[{"Flatten","[","probabilities","]"}]}],";","\n","  ","\n",RowBox[
+{"(*"," ",RowBox[{"Generate"," ","random"," ","number"," ","between"," ","0"," ","and"," ","1"}]," ","*)"}],"\n","  ",RowBox[
+{"r"," ","="," ",RowBox[{"RandomReal","[","]"}]}],";","\n","\[NonBreakingSpace]","\n",RowBox[
+{"(*"," ",RowBox[{"Start"," ","at"," ","0"}]," ","*)"}],"\n"," ",RowBox[{"s"," ","="," ","0"}],";","\n","  ","\n","\[NonBreakingSpace]",RowBox[
+{"(*"," ",RowBox[{"Loop"," ","through"," ","all"," ","probabilities"}]," ","*)"}],"\n","  ",RowBox[
+{"For","[",RowBox[{RowBox[{"j"," ","="," ","1"}],","," ",RowBox[{"j"," ","\[LessEqual]"," ","n"}],","," ",RowBox[
+{"j","++"}],",","\n","\[NonBreakingSpace]",RowBox[{"(*"," ",RowBox[{"Add"," ","the"," ","probability"," ","to"," ","the"," ","total"}]," ","*)"}],"\n","    ",RowBox[
+{RowBox[{"s"," ","="," ",RowBox[{"s"," ","+"," ",RowBox[{"probs","[",RowBox[{"[","j","]"}],"]"}]}]}],";","\n","\[NonBreakingSpace]",RowBox[
+{"(*"," ",RowBox[{RowBox[{"If"," ","the"," ","total"," ","is"," ","greater"," ","than"," ","the"," ","randomly"," ","generated"," ","number"}],",",RowBox[
+{"this"," ","is"," ","our"," ","outcome"}]}],"  ","*)"}],"\[NonBreakingSpace]\[NonBreakingSpace]\[NonBreakingSpace]","\n","    ",RowBox[
+{"If","[",RowBox[{RowBox[{"r"," ","<"," ","s"}],",","\n","\[NonBreakingSpace]\[NonBreakingSpace]",RowBox[
+{"(*"," ",RowBox[{"Return"," ","the"," ","index"," ","of"," ","the"," ","outcome"}]," ","*)"}],"\n","      ",RowBox[
+{RowBox[{"Return","[","j","]"}],";"}]}],"\n","    ","]"}],";"}]}],"\n","  ","]"}],";"}]}],"\n","]"}]}]}],RowBox[
+{"\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"ComputeProb",":"," ",RowBox[{"Function"," ","that"," ","obtains"," ","list"," ","of"," ","probabilities"}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{"ComputeProb","[",RowBox[{"quantumState_",","," ","projectors_"}],"]"}]," ",":="," ",RowBox[
+{"Module","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"{","}"}]}],","," ","rightHalf",","," ","probability"}],"}"}],",","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{"Loop"," ","over"," ","each"," ","projector"}]," ","*)"}],"\n","  ",RowBox[
+{RowBox[{"Do","[","\n","    ",RowBox[{"(*"," ",RowBox[{RowBox[{"Step"," ","1"}],":"," ",RowBox[
+{"Multiply"," ","projector"," ","and"," ","quantum"," ","state"," ","ket"}]}]," ","*)"}],"\n","    ",RowBox[
+{RowBox[{RowBox[{"rightHalf"," ","="," ",RowBox[{RowBox[{"projectors","[",RowBox[
+{"[","j","]"}],"]"}],".","quantumState"}]}],";","\n","    ","\n","    ",RowBox[{"(*"," ",RowBox[
+{RowBox[{"Step"," ","2"}],":"," ",RowBox[{"Multiply"," ","quantum"," ","state"," ","bra"," ","and"," ","previous"," ","result"}]}]," ","*)"}],"\n","    ",RowBox[
+{"probability"," ","="," ",RowBox[{RowBox[{RowBox[{"ConjugateTranspose","[","quantumState","]"}],".","rightHalf"}]," ","//"," ","Re"}]}],";","\n","    ","\n","    ",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Step"," ","3"}],":"," ",RowBox[{"Add"," ","probability"," ","to"," ","the"," ","list"}]}]," ","*)"}],"\n","    ",RowBox[
+{"AppendTo","[",RowBox[{"probabilities",","," ","probability"}],"]"}],";"}],"\n","    ",",","\n","    ",RowBox[
+{"{",RowBox[{"j",","," ","1",","," ",RowBox[{"Length","[","projectors","]"}]}],"}"}]}],"\n","  ","]"}],";","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{"Return"," ","the"," ","list"," ","of"," ","probabilities"}]," ","*)"}],"\n","  ","probabilities"}]}],"\n","]"}]}]}],RowBox[
+{"\n","\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"QMeasure",":"," ",RowBox[
+{"Simultates"," ","Quantum"," ","Measurement"}]}]," ","*)"}],"\n",RowBox[{RowBox[
+{"QMeasure","[",RowBox[{"quantumState_",","," ","basis_"}],"]"}]," ",":="," ",RowBox[
+{"Module","[",RowBox[{RowBox[{"{","\n","  ",RowBox[{"ket00",","," ","ket01",","," ","ket10",","," ","ket11",","," ","bra00",","," ","bra01",","," ","bra10",","," ","bra11",","," ","projector00",","," ","projector01",","," ","projector10",","," ","projector11",","," ","projectors",","," ","probabilities",","," ","outcomeIndex"}],"\n","}"}],",","\n","\n","  ",RowBox[
+{"(*"," ",RowBox[{"Extract"," ","each"," ","ket"," ","from"," ","the"," ","basis"}]," ","*)"}],"\n","  ",RowBox[
+{RowBox[{"ket00"," ","="," ",RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"basis","[",RowBox[
+{"[",RowBox[{"All",","," ","1"}],"]"}],"]"}],"}"}],"]"}]}],";","\n","  ",RowBox[{"ket01"," ","="," ",RowBox[
+{"Transpose","[",RowBox[{"{",RowBox[{"basis","[",RowBox[{"[",RowBox[{"All",","," ","2"}],"]"}],"]"}],"}"}],"]"}]}],";","\n","  ",RowBox[
+{"ket10"," ","="," ",RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"basis","[",RowBox[
+{"[",RowBox[{"All",","," ","3"}],"]"}],"]"}],"}"}],"]"}]}],";","\n","  ",RowBox[{"ket11"," ","="," ",RowBox[
+{"Transpose","[",RowBox[{"{",RowBox[{"basis","[",RowBox[{"[",RowBox[{"All",","," ","4"}],"]"}],"]"}],"}"}],"]"}]}],";","\n","  ","\n",RowBox[
+{"(*"," ",RowBox[{"Building"," ","the"," ","projectors"," ","for"," ","each"," ","vector"," ","in"," ","the"," ","standard"," ","basis"}]," ","*)"}],"\n",RowBox[
+{"bra00"," ","="," ",RowBox[{"ConjugateTranspose","[","ket00","]"}]}],";","\n",RowBox[
+{"(*"," ",RowBox[{"Ket"," ","x"," ","Bra"}]," ","*)"}],"\n"," ",RowBox[{"projector00"," ","="," ",RowBox[
+{"ket00"," ","."," ","bra00"}]}],";","\n"," ",RowBox[{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[
+{"MatrixForm","[","projector00","]"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[{"bra01"," ","="," ",RowBox[
+{"ConjugateTranspose","[","ket01","]"}]}],";","\n",RowBox[{"projector01"," ","="," ",RowBox[
+{"ket01"," ","."," ","bra01"}]}],";","\n",RowBox[{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[
+{"MatrixForm","[","projector01","]"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[{"bra10"," ","="," ",RowBox[
+{"ConjugateTranspose","[","ket10","]"}]}],";","\n",RowBox[{"projector10"," ","="," ",RowBox[
+{"ket10"," ","."," ","bra10"}]}],";","\n",RowBox[{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[
+{"MatrixForm","[","projector10","]"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[{"bra11"," ","="," ",RowBox[
+{"ConjugateTranspose","[","ket11","]"}]}],";","\n"," ",RowBox[{"projector11"," ","="," ",RowBox[
+{"ket11"," ","."," ","bra11"}]}],";","\n",RowBox[{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[
+{"MatrixForm","[","projector11","]"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[{"(*"," ",RowBox[
+{"Store"," ","projectors"," ","in"," ","a"," ","list"}]," ","*)"}],"\n",RowBox[{"projectors"," ","="," ",RowBox[
+{"{",RowBox[{"projector00",","," ","projector01",","," ","projector10",","," ","projector11"}],"}"}]}],";","\n","\n",RowBox[
+{"(*"," ",RowBox[{"Call"," ","function"," ","to"," ","get"," ","probabilities"}]," ","*)"}],"\n",RowBox[
+{"probabilities"," ","="," ",RowBox[{"ComputeProb","[",RowBox[{"quantumState",","," ","projectors"}],"]"}]}],";","\n","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[{"\"Probabilities: \"",","," ","probabilities"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[
+{"(*"," ",RowBox[{"We"," ","have"," ","the"," ","index"," ","of"," ","the"," ","measurement"," ","outcome"," ","that"," ","has"," ","been"," ","chosen"," ","at"," ","random"}]," ","*)"}],"\n",RowBox[
+{"outcomeIndex"," ","="," ",RowBox[{"ProbRandGen","[","probabilities","]"}]}],";","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[{"\"Random measurement outcome index: \"",","," ","outcomeIndex"}],"]"}],";"}]," ","*)"}],"\n","\n","\n",RowBox[
+{"(*"," ",RowBox[{"Multiply"," ","projector"," ","and"," ","quantum"," ","state"," ","ket"}]," ","*)"}],"\n","  ",RowBox[
+{"rightHalf"," ","="," ",RowBox[{RowBox[{"projectors","[",RowBox[{"[","outcomeIndex","]"}],"]"}],".","quantumState"}]}],";","\n","\[NonBreakingSpace]\[NonBreakingSpace]","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[{"\"Right half: \"",","," ","rightHalf"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[
+{"flatProbs"," ","="," ",RowBox[{"Flatten","[","probabilities","]"}]}],";","\n",RowBox[
+{"(*"," ",RowBox[{"New"," ","quantum"," ","state"," ","of"," ","the"," ","system"," ","after"," ","measurement"}]," ","*)"}],"\n",RowBox[
+{"resultingState"," ","="," ",RowBox[{"rightHalf"," ","/"," ",RowBox[{"Sqrt","[",RowBox[
+{"flatProbs","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"]"}]}]}],";","\n","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[{"\"Resulting state: \"",","," ","resultingState"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[
+{"(*"," ",RowBox[{"Which"," ","basis"," ","vector"," ","occured"}]," ","*)"}],"\n",RowBox[
+{"basisVector"," ","="," ",RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"basis","[",RowBox[
+{"[",RowBox[{"All",","," ","outcomeIndex"}],"]"}],"]"}],"}"}],"]"}]}],";","\n","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"Print","[",RowBox[{"\"Basis vector: \"",","," ","basisVector"}],"]"}],";"}]," ","*)"}],"\n","\n",RowBox[
+{"Return","[",RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}],"]"}],";"}]}],"\n","\[NonBreakingSpace]","\n","]"}]}]}],RowBox[
+{"\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{RowBox[{"|","\[Psi]\:27e9"}]," ","="," ",RowBox[
+{RowBox[{"(",RowBox[{"|",RowBox[{"00",">"," ",RowBox[{"+"," ","i"}]}],"|",RowBox[
+{"01",">"," ","-"}]," ","|",RowBox[{"11",">"}]}],")"}],"/",RowBox[{"\[Sqrt]","3"}]}]}]," ","*)"}],"\n",RowBox[
+{RowBox[{"quantumStateOne"," ","="," ",RowBox[{RowBox[{"{",RowBox[{RowBox[{"{","1","}"}],","," ",RowBox[
+{"{","I","}"}],","," ",RowBox[{"{","0","}"}],","," ",RowBox[{"{",RowBox[{"-","1"}],"}"}]}],"}"}],"/",RowBox[
+{"Sqrt","[","3","]"}]}]}],";"}]}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[
+{"Standard"," ","Basis"}]," ","*)"}],"\n",RowBox[{RowBox[{"basisOne"," ","="," ",RowBox[
+{"IdentityMatrix","[","4","]"}]}],";"}]}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[
+{"Abritrary"," ","Basis"}]," ","*)"}],"\n",RowBox[{RowBox[{"basisTwo"," ","="," ",RowBox[
+{"{",RowBox[{RowBox[{"{",RowBox[{RowBox[{"1","/",RowBox[{"Sqrt","[","2","]"}]}],","," ","0",","," ","0",","," ",RowBox[
+{"1","/",RowBox[{"Sqrt","[","2","]"}]}]}],"}"}],",","\n","     ",RowBox[{"{",RowBox[
+{"0",","," ",RowBox[{"1","/",RowBox[{"Sqrt","[","2","]"}]}],","," ",RowBox[{"1","/",RowBox[
+{"Sqrt","[","2","]"}]}],","," ","0"}],"}"}],",","\n","     ",RowBox[{"{",RowBox[{"0",","," ",RowBox[
+{"1","/",RowBox[{"Sqrt","[","2","]"}]}],","," ",RowBox[{RowBox[{"-","1"}],"/",RowBox[
+{"Sqrt","[","2","]"}]}],","," ","0"}],"}"}],",","\n","     ",RowBox[{"{",RowBox[{RowBox[
+{"1","/",RowBox[{"Sqrt","[","2","]"}]}],","," ","0",","," ","0",","," ",RowBox[{RowBox[
+{"-","1"}],"/",RowBox[{"Sqrt","[","2","]"}]}]}],"}"}]}],"}"}]}],";"}]}],RowBox[{"\n","\n"}],RowBox[
+{RowBox[{"(*"," ",RowBox[{"Function"," ","that"," ","simulates"," ","quantum"," ","measurement"}]," ","*)"}],"\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities"}],"}"}]," ","="," ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisOne"}],"]"}]}]," ","*)"}],"\n","\n",RowBox[
+{"(*"," ",RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[{"Flatten","[","probabilities","]"}]}],";"}]," ","*)"}],"\n",RowBox[
+{"(*"," ",RowBox[{"Print","[",RowBox[{"probabilities","[",RowBox[{"[","1","]"}],"]"}],"]"}]," ","*)"}],"\n","\n",RowBox[
+{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","100"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ","\n","    ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisOne"}],"]"}]}],";","\n","\[NonBreakingSpace]\[NonBreakingSpace]\[NonBreakingSpace]\[NonBreakingSpace]","\n","  ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{"Print"," ","the"," ","resulting"," ","state"," ","the"," ","first"," ","time"," ","this"," ","outcome"," ","appears"}]," ","*)"}],"\n","  ",RowBox[
+{"If","[",RowBox[{RowBox[{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}]," ","=="," ","1"}],",","\n","\[NonBreakingSpace] ",RowBox[
+{RowBox[{"Print","[",RowBox[{"\"Column Number: \"",","," ","outcomeIndex"}],"]"}],";","\n","    ",RowBox[
+{"Print","[",RowBox[{"\"Basis Vector: \"",","," ","basisVector"}],"]"}],";","\n","\[NonBreakingSpace] ",RowBox[
+{"Print","[",RowBox[{"\"Probability: \"",","," ",RowBox[{"Flatten","[",RowBox[{"probabilities","[",RowBox[
+{"[","outcomeIndex","]"}],"]"}],"]"}]}],"]"}],";","\n","    ",RowBox[{"Print","[",RowBox[
+{"\"Resulting state: \"",","," ","resultingState"}],"]"}],";","\n","\[NonBreakingSpace] ",RowBox[
+{"Print","[","\"\"","]"}],";","\n","\[NonBreakingSpace] ",RowBox[{"Print","[","\"\"","]"}],";"}]}],"\n","  ","]"}],";"}],"\n","  ","\n",","," ",RowBox[
+{"{","100","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","100"}]}],"\n","\n",RowBox[
+{"(*"," ",RowBox[{"Print","[","HN","]"}]," ","*)"}],"\n",RowBox[{"(*"," ",RowBox[
+{"Print","[","probabilities","]"}]," ","*)"}],"\n","\n","\n",RowBox[{"BarChart","[","\n","  ",RowBox[
+{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","   ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 100\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}]}],RowBox[
+{"\n","\n","\n","\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","500"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisOne"}],"]"}]}],";","\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";"}],"   ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n",","," ",RowBox[
+{"{","500","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","500"}]}],"\n","\n","\n",RowBox[
+{"BarChart","[","\n","  ",RowBox[{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","   ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 500\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}]}],RowBox[
+{"\n","\n","\n","\n","\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","1000"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisOne"}],"]"}]}],";","\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";"}],"   ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n",","," ",RowBox[
+{"{","1000","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","1000"}]}],"\n","\n","\n",RowBox[
+{"BarChart","[","\n","  ",RowBox[{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","   ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 1000\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}]}],RowBox[
+{"\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","100"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ","\n","    ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisTwo"}],"]"}]}],";","\n","\[NonBreakingSpace]\[NonBreakingSpace]\[NonBreakingSpace]\[NonBreakingSpace]","\n","  ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{"Print"," ","the"," ","resulting"," ","state"," ","the"," ","first"," ","time"," ","this"," ","outcome"," ","appears"}]," ","*)"}],"\n","  ",RowBox[
+{"If","[",RowBox[{RowBox[{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}]," ","=="," ","1"}],",","\n","\[NonBreakingSpace] ",RowBox[
+{RowBox[{"Print","[",RowBox[{"\"Column Number: \"",","," ","outcomeIndex"}],"]"}],";","\n","    ",RowBox[
+{"Print","[",RowBox[{"\"Basis Vector: \"",","," ","basisVector"}],"]"}],";","\n","\[NonBreakingSpace] ",RowBox[
+{"Print","[",RowBox[{"\"Probability: \"",","," ",RowBox[{"Flatten","[",RowBox[{"probabilities","[",RowBox[
+{"[","outcomeIndex","]"}],"]"}],"]"}]}],"]"}],";","\n","    ",RowBox[{"Print","[",RowBox[
+{"\"Resulting state: \"",","," ","resultingState"}],"]"}],";","\n","\[NonBreakingSpace] ",RowBox[
+{"Print","[","\"\"","]"}],";","\n","\[NonBreakingSpace] ",RowBox[{"Print","[","\"\"","]"}],";"}]}],"\n","  ","]"}],";"}],"\n","  ","\n",","," ",RowBox[
+{"{","100","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","100"}]}],"\n","\n","\n",RowBox[
+{"BarChart","[","\n","  ",RowBox[{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","   ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 100\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}]}],RowBox[
+{"\n","\n","\n","\n","\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","500"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisTwo"}],"]"}]}],";","\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";"}],"   ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n",","," ",RowBox[
+{"{","500","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","500"}]}],"\n","\n","\n",RowBox[
+{"BarChart","[","\n","  ",RowBox[{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","   ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 500\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}]}],RowBox[
+{"\n","\n","\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Initialize"," ","counters"," ","for"," ","how"," ","much"," ","each"," ","outcome"," ","occurs"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"counts"," ","="," ",RowBox[{"{",RowBox[{"0",","," ","0",","," ","0",","," ","0"}],"}"}]}],";"}]}],RowBox[
+{"\n","\n"}],RowBox[{RowBox[{"(*"," ",RowBox[{"Run"," ","1000"," ","measurements"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"Do","[","\n","  ",RowBox[{RowBox[{RowBox[{RowBox[{"{",RowBox[{"outcomeIndex",","," ","probabilities",","," ","resultingState",","," ","basisVector"}],"}"}]," ","="," ",RowBox[
+{"QMeasure","[",RowBox[{"quantumStateOne",","," ","basisTwo"}],"]"}]}],";","\n","  ",RowBox[
+{RowBox[{"counts","[",RowBox[{"[","outcomeIndex","]"}],"]"}],"++"}],";"}],"   ",RowBox[
+{"(*"," ",RowBox[{"increment"," ","the"," ","correct"," ","counter"}]," ","*)"}],"\n",","," ",RowBox[
+{"{","1000","}"}]}],"]"}],";"}]}],RowBox[{"\n","\n","\n"}],RowBox[{RowBox[{"probabilities"," ","="," ",RowBox[
+{"Flatten","[","probabilities","]"}]}],";"}],"\n",RowBox[{"probabilities"," ","="," ",RowBox[
+{"N","[","probabilities","]"}]}],RowBox[{"\n","\n"}],RowBox[{"(*"," ",RowBox[{"Frequency"," ","of"," ","each"," ","outcome"," ","in"," ","decimal"," ","form"}]," ","*)"}],"\n",RowBox[
+{RowBox[{"HN"," ","="," ",RowBox[{RowBox[{"N","[","counts","]"}],"/","1000"}]}],"\n","\n","\n",RowBox[
+{"BarChart","[","\n","  ",RowBox[{RowBox[{"Transpose","[",RowBox[{"{",RowBox[{"HN",","," ","probabilities"}],"}"}],"]"}],",","   ",RowBox[
+{"(*"," ",RowBox[{"pair"," ","up"," ","each"," ","simulated"," ","vs"," ","true"," ","prob"}]," ","*)"}],"\n","  ",RowBox[
+{"ChartLayout"," ","\[Rule]"," ","\"Grouped\""}],",","\n","  ",RowBox[{"ChartLabels"," ","\[Rule]"," ",RowBox[
+{"Placed","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"Range","[","4","]"}],","," ",RowBox[
+{"{",RowBox[{"\"HN[j]\"",","," ","\"p[j]\""}],"}"}]}],"}"}],","," ",RowBox[{"{",RowBox[
+{"Below",","," ","Above"}],"}"}]}],"]"}]}],",","\n","  ",RowBox[{"PlotLabel"," ","\[Rule]"," ","\"HN[j] vs. p[j] for N = 1000\""}],",","\n","  ",RowBox[
+{"ChartStyle"," ","\[Rule]"," ",RowBox[{"{",RowBox[{RowBox[{"Lighter","[","Blue","]"}],","," ",RowBox[
+{"Lighter","[","Orange","]"}]}],"}"}]}],",","\n","  ",RowBox[{"BarSpacing"," ","\[Rule]"," ","0.3"}],",","\n","  ",RowBox[
+{"AxesLabel"," ","\[Rule]"," ",RowBox[{"{",RowBox[{"\"Outcome j\"",","," ","\"Probability\""}],"}"}]}]}],"\n","]"}],"\n","\n"}]}],
+"Input",CellLabel -> "In[194]:= ",ExpressionUUID -> "b26bf28e-5445-4772-98d6-e136cabf4dd4"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","2"}],SequenceForm[
+"Column Number: ",2],Editable -> False],StandardForm],"Print",ExpressionUUID -> "b4dcedd8-e801-4f17-9f03-9320ae5f2a28"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{","1","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}]}],"}"}]}],SequenceForm["Basis Vector: ",{{0},{1},{0},{0}}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "8b9c8125-7247-43b3-93c7-32384afecba5"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"1","3"],"}"}]}],SequenceForm["Probability: ",{Rational[1,3]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "31061732-32d0-4e30-8158-4c63b3ea2960"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{","\[ImaginaryI]","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}]}],"}"}]}],SequenceForm["Resulting state: ",{{0},{Complex[0,1]},{0},{0}}],
+Editable -> False],StandardForm],"Print",ExpressionUUID -> "6800f702-9df6-442a-916c-94968dee5409"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "34cf1964-3283-4e70-9e16-be0cfc832bc0"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "3d60ee95-0bf2-427c-8937-49882ffbe2b0"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","1"}],SequenceForm[
+"Column Number: ",1],Editable -> False],StandardForm],"Print",ExpressionUUID -> "1e6f76fd-673c-4cd2-b77b-b13561e84954"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","1","}"}],",",RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}]}],"}"}]}],SequenceForm["Basis Vector: ",{{1},{0},{0},{0}}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "93a9ba43-be91-4ff2-8633-3c69e3647c8b"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"1","3"],"}"}]}],SequenceForm["Probability: ",{Rational[1,3]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "f22b8c58-907d-4f90-99ca-374a011c295b"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","1","}"}],",",RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}]}],"}"}]}],SequenceForm["Resulting state: ",{{1},{0},{0},{0}}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "484949d1-bcb1-4608-88d1-0040023acc2f"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "05d2cb1c-659d-4c8c-a818-80d394d3638d"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "0a76bafd-a16c-49a2-bba3-fd6816c5701e"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","4"}],SequenceForm[
+"Column Number: ",4],Editable -> False],StandardForm],"Print",ExpressionUUID -> "ed6b50ef-5f3d-4bfe-b074-9d096a411937"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","1","}"}]}],"}"}]}],SequenceForm["Basis Vector: ",{{0},{0},{0},{1}}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "da99414a-f8c5-4e73-8f9c-0babd817b88f"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"1","3"],"}"}]}],SequenceForm["Probability: ",{Rational[1,3]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "254db5a1-5f7f-48b7-89b2-8dba73794c5c"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{",RowBox[{"-","1"}],"}"}]}],"}"}]}],SequenceForm["Resulting state: ",{{0},{0},{0},{-1}}],
+Editable -> False],StandardForm],"Print",ExpressionUUID -> "eb68c933-d444-4669-9f49-2f2a0b787acd"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "ac7b6254-4c8a-4f16-bd5d-06b0683c4687"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "d7c96f27-702b-4055-a36e-d3bf24d737f1"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.3333333333333333`",",","0.3333333333333333`",",","0.`",",","0.3333333333333333`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[203]= ",ExpressionUUID -> "bb676fea-1713-4a35-a705-04dc74c16ce5"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.25`",",","0.3`",",","0.`",",","0.45`"}],"}"}],StandardForm],
+"Output",CellLabel -> "Out[204]= ",ExpressionUUID -> "63c4c31e-931d-4576-86f0-b9d1a08127e8"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.25`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.25`]],TagBoxNote -> "0.25"],StyleBox["0.25`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.25`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},
+{3.3846153846153846`,0.3`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.3`]],TagBoxNote -> "0.3"],StyleBox["0.3`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.`},"RoundingRadius" -> 0]}],
+"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],
+StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.`,{}],
+"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[Thickness[Small],Opacity[
+0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],NCache[
+Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},{7.230769230769232`,0.45`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.45`]],
+TagBoxNote -> "0.45"],StyleBox["0.45`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.45`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[Small],
+Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[1,3],
+0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue[
+"MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},
+{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.25`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.3333333333333333`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{3.`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",
+{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{3.`,0.3`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.`,0.3333333333333333`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.923076923076923`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{5.923076923076923`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{6.846153846153847`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{6.846153846153847`,0.45`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{7.846153846153847`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{7.846153846153847`,0.3333333333333333`}],ImageScaled[
+{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[Tiny]],{LineBox[
+{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[Thickness[
+Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 100\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "8eda4bd8-8eb9-4b8d-98c7-c47fb2a4ce98"],
+StandardForm],"Output",CellLabel -> "Out[205]= ",ExpressionUUID -> "b5ce16b4-53b2-4564-8634-53dba9b01f90"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.3333333333333333`",",","0.3333333333333333`",",","0.`",",","0.3333333333333333`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[209]= ",ExpressionUUID -> "04ab3f57-6daf-4919-b0b6-a1751df1e405"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.302`",",","0.34800000000000003`",",","0.`",",","0.35000000000000003`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[210]= ",ExpressionUUID -> "d9fc6238-cb23-4025-a737-a292a83a90d8"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.302`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],
+Function[StatusArea[Slot[1],0.302`]],TagBoxNote -> "0.302"],StyleBox["0.302`",{},
+StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.302`,{}],"Tooltip"]]]},{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,
+NCache[Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},
+{3.3846153846153846`,0.34800000000000003`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],
+Function[StatusArea[Slot[1],0.34800000000000003`]],TagBoxNote -> "0.34800000000000003"],
+StyleBox["0.34800000000000003`",{},StripOnInput -> False]],Function[Annotation[Slot[
+1],Style[0.34800000000000003`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[
+Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[
+1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.`},"RoundingRadius" -> 0]}],
+"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],
+StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.`,{}],
+"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[Thickness[Small],Opacity[
+0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],NCache[
+Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},{7.230769230769232`,0.35000000000000003`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.35000000000000003`]],
+TagBoxNote -> "0.35000000000000003"],StyleBox["0.35000000000000003`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.35000000000000003`,{}],"Tooltip"]]]},{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,
+NCache[Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.302`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.3333333333333333`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{3.`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",
+{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{3.`,0.34800000000000003`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{4.`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",
+{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{4.`,0.3333333333333333`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{4.923076923076923`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{5.923076923076923`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{6.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{6.846153846153847`,0.35000000000000003`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{7.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{7.846153846153847`,0.3333333333333333`}],
+ImageScaled[{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[
+Tiny]],{LineBox[{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[
+Thickness[Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 500\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "412b384e-677e-4bdc-a66c-59c15ee6439e"],
+StandardForm],"Output",CellLabel -> "Out[211]= ",ExpressionUUID -> "689e779f-4a53-4727-a246-c7c2f38f605a"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.3333333333333333`",",","0.3333333333333333`",",","0.`",",","0.3333333333333333`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[215]= ",ExpressionUUID -> "924180af-33b4-4a54-905b-c188b46a0909"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.357`",",","0.354`",",","0.`",",","0.289`"}],"}"}],StandardForm],
+"Output",CellLabel -> "Out[216]= ",ExpressionUUID -> "b82cfade-786e-44dd-8f3e-b53e2e9ea39c"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.357`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],
+Function[StatusArea[Slot[1],0.357`]],TagBoxNote -> "0.357"],StyleBox["0.357`",{},
+StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.357`,{}],"Tooltip"]]]},{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,
+NCache[Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},
+{3.3846153846153846`,0.354`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],
+Function[StatusArea[Slot[1],0.354`]],TagBoxNote -> "0.354"],StyleBox["0.354`",{},
+StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.354`,{}],"Tooltip"]]]},{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,
+NCache[Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.`},"RoundingRadius" -> 0]}],
+"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],
+StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[Slot[1],Style[0.`,{}],
+"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[Thickness[Small],Opacity[
+0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],NCache[
+Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},{7.230769230769232`,0.289`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.289`]],
+TagBoxNote -> "0.289"],StyleBox["0.289`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.289`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[Small],
+Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[1,3],
+0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue[
+"MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},
+{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.3333333333333333`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.3333333333333333`]],
+TagBoxNote -> "0.3333333333333333"],StyleBox["0.3333333333333333`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.3333333333333333`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.357`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.3333333333333333`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{3.`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",
+{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{3.`,0.354`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{4.`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",
+{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{4.`,0.3333333333333333`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{4.923076923076923`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{5.923076923076923`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{6.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{6.846153846153847`,0.289`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{7.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{7.846153846153847`,0.3333333333333333`}],
+ImageScaled[{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[
+Tiny]],{LineBox[{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[
+Thickness[Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 1000\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "5d7025a9-80b5-443e-95df-db810cfd7c52"],
+StandardForm],"Output",CellLabel -> "Out[217]= ",ExpressionUUID -> "233f3f8a-f44b-4d30-bce3-535968bf42c1"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","4"}],SequenceForm[
+"Column Number: ",4],Editable -> False],StandardForm],"Print",ExpressionUUID -> "59718bb5-d78e-414e-9516-eaa28bf8c9e4"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{",FractionBox["1",SqrtBox["2"]],"}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}],",",RowBox[{"{",RowBox[{"-",FractionBox["1",SqrtBox["2"]]}],"}"}]}],"}"}]}],
+SequenceForm["Basis Vector: ",{{Power[2,Rational[-1,2]]},{0},{0},{Times[-1,Power[
+2,Rational[-1,2]]]}}],Editable -> False],StandardForm],"Print",ExpressionUUID -> "6e2e8685-74bf-4097-85a9-3205846e72e9"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"2","3"],"}"}]}],SequenceForm["Probability: ",{Rational[2,3]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "ae48e49c-45d7-4456-93aa-5007b2d16d92"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{",FractionBox["1",SqrtBox["2"]],"}"}],",",RowBox[{"{","0","}"}],",",RowBox[
+{"{","0","}"}],",",RowBox[{"{",RowBox[{"-",FractionBox["1",SqrtBox["2"]]}],"}"}]}],"}"}]}],
+SequenceForm["Resulting state: ",{{Power[2,Rational[-1,2]]},{0},{0},{Times[-1,Power[
+2,Rational[-1,2]]]}}],Editable -> False],StandardForm],"Print",ExpressionUUID -> "4be7df05-609b-446e-bc63-ac4775ee297b"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "8fdbd088-d2dd-4378-97eb-e5205f55c0f7"],Cell[
+BoxData[
+"\"\"",StandardForm],"Print",ExpressionUUID -> "efd0ef6b-fc16-4c9d-b969-3a7aa6912cba"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","2"}],SequenceForm[
+"Column Number: ",2],Editable -> False],StandardForm],"Print",ExpressionUUID -> "51c65f9f-c31e-476d-9cd6-ee0944f6d457"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{",FractionBox["1",SqrtBox["2"]],"}"}],",",RowBox[
+{"{",FractionBox["1",SqrtBox["2"]],"}"}],",",RowBox[{"{","0","}"}]}],"}"}]}],SequenceForm[
+"Basis Vector: ",{{0},{Power[2,Rational[-1,2]]},{Power[2,Rational[-1,2]]},{0}}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "5648178b-fe64-4290-ad5e-d1a7ca2c009f"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"1","6"],"}"}]}],SequenceForm["Probability: ",{Rational[1,6]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "0f98acb2-579a-44ee-b25a-04970cfc1d5a"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{",FractionBox["\[ImaginaryI]",SqrtBox["2"]],"}"}],",",RowBox[
+{"{",FractionBox["\[ImaginaryI]",SqrtBox["2"]],"}"}],",",RowBox[{"{","0","}"}]}],"}"}]}],
+SequenceForm["Resulting state: ",{{0},{Times[Complex[0,1],Power[2,Rational[-1,2]]]},{Times[
+Complex[0,1],Power[2,Rational[-1,2]]]},{0}}],Editable -> False],StandardForm],"Print",
+ExpressionUUID -> "d1249f66-1559-46b6-87ad-939718856750"],Cell[
+BoxData["\"\"",StandardForm],
+"Print",ExpressionUUID -> "97c62ef7-187e-4912-9051-f5e27ee1fb98"],Cell[
+BoxData["\"\"",
+StandardForm],"Print",ExpressionUUID -> "bc8573ff-33ad-4162-b3db-eca166fe307f"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Column Number: \"","\[InvisibleSpace]","3"}],SequenceForm[
+"Column Number: ",3],Editable -> False],StandardForm],"Print",ExpressionUUID -> "3a45231c-e91e-4d9e-8bbd-da5517209b21"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Basis Vector: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{",FractionBox["1",SqrtBox["2"]],"}"}],",",RowBox[
+{"{",RowBox[{"-",FractionBox["1",SqrtBox["2"]]}],"}"}],",",RowBox[{"{","0","}"}]}],"}"}]}],
+SequenceForm["Basis Vector: ",{{0},{Power[2,Rational[-1,2]]},{Times[-1,Power[2,Rational[
+-1,2]]]},{0}}],Editable -> False],StandardForm],"Print",ExpressionUUID -> "7fbc5ddf-59b7-4d37-ba96-ac954e98e1d8"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Probability: \"","\[InvisibleSpace]",RowBox[{"{",FractionBox[
+"1","6"],"}"}]}],SequenceForm["Probability: ",{Rational[1,6]}],Editable -> False],
+StandardForm],"Print",ExpressionUUID -> "2a4fb8a0-0f32-4bc2-a540-9c00b1fcf580"],Cell[
+BoxData[
+InterpretationBox[RowBox[{"\"Resulting state: \"","\[InvisibleSpace]",RowBox[{"{",RowBox[
+{RowBox[{"{","0","}"}],",",RowBox[{"{",FractionBox["\[ImaginaryI]",SqrtBox["2"]],"}"}],",",RowBox[
+{"{",RowBox[{"-",FractionBox["\[ImaginaryI]",SqrtBox["2"]]}],"}"}],",",RowBox[{"{","0","}"}]}],"}"}]}],
+SequenceForm["Resulting state: ",{{0},{Times[Complex[0,1],Power[2,Rational[-1,2]]]},{Times[
+Complex[0,-1],Power[2,Rational[-1,2]]]},{0}}],Editable -> False],StandardForm],"Print",
+ExpressionUUID -> "4b152171-7160-4507-a4c4-40d403ef45c5"],Cell[
+BoxData["\"\"",StandardForm],
+"Print",ExpressionUUID -> "6a14e698-fcd8-4ebf-a2a5-21f31fc184b9"],Cell[
+BoxData["\"\"",
+StandardForm],"Print",ExpressionUUID -> "b375afe4-9835-4686-92ca-f16f044c3a84"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.16666666666666666`",",","0.16666666666666666`",",","0.6666666666666666`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[221]= ",ExpressionUUID -> "fadd3f8d-a1aa-43b6-be34-dfe55baf67ec"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.14`",",","0.13`",",","0.73`"}],"}"}],StandardForm],
+"Output",CellLabel -> "Out[222]= ",ExpressionUUID -> "ddf53f36-18b0-4e3e-9445-5ff372ab6d1d"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],
+TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],
+NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},{3.3846153846153846`,0.14`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.14`]],
+TagBoxNote -> "0.14"],StyleBox["0.14`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.14`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[Small],
+Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[1,3],
+0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue[
+"MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},
+{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.13`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.13`]],TagBoxNote -> "0.13"],StyleBox["0.13`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.13`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},
+{7.230769230769232`,0.73`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.73`]],TagBoxNote -> "0.73"],StyleBox["0.73`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.73`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.6666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.6666666666666666`]],
+TagBoxNote -> "0.6666666666666666"],StyleBox["0.6666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.6666666666666666`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{3.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{3.`,0.14`}],ImageScaled[{0.5`,0}]],InsetBox[FormBox[
+StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.`,0.16666666666666666`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.923076923076923`,0.13`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{5.923076923076923`,0.16666666666666666`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{6.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{6.846153846153847`,0.73`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{7.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{7.846153846153847`,0.6666666666666666`}],
+ImageScaled[{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[
+Tiny]],{LineBox[{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[
+Thickness[Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 100\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "2d7cd498-a952-4048-a0b1-dc7f9b0e2d27"],
+StandardForm],"Output",CellLabel -> "Out[223]= ",ExpressionUUID -> "a395713d-8849-444b-954b-65b282c7fdc8"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.16666666666666666`",",","0.16666666666666666`",",","0.6666666666666666`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[227]= ",ExpressionUUID -> "6a31fb89-203b-4774-b0e6-7d2952a34eef"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.182`",",","0.17`",",","0.648`"}],"}"}],StandardForm],
+"Output",CellLabel -> "Out[228]= ",ExpressionUUID -> "ad346dd8-ee35-4825-aac8-dc3be1943b21"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],
+TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],
+NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},{3.3846153846153846`,0.182`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.182`]],
+TagBoxNote -> "0.182"],StyleBox["0.182`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.182`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[Small],
+Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[1,3],
+0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue[
+"MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},
+{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.17`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.17`]],TagBoxNote -> "0.17"],StyleBox["0.17`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.17`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},
+{7.230769230769232`,0.648`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.648`]],TagBoxNote -> "0.648"],StyleBox["0.648`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.648`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.6666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.6666666666666666`]],
+TagBoxNote -> "0.6666666666666666"],StyleBox["0.6666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.6666666666666666`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{3.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{3.`,0.182`}],ImageScaled[{0.5`,0}]],InsetBox[FormBox[
+StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.`,0.16666666666666666`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.923076923076923`,0.17`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{5.923076923076923`,0.16666666666666666`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{6.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{6.846153846153847`,0.648`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{7.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{7.846153846153847`,0.6666666666666666`}],
+ImageScaled[{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[
+Tiny]],{LineBox[{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[
+Thickness[Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 500\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "73f44696-b9f1-4ed1-99a5-67a0024d381c"],
+StandardForm],"Output",CellLabel -> "Out[229]= ",ExpressionUUID -> "62b03d0e-c9bc-405f-95b6-92d3a8aea736"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.16666666666666666`",",","0.16666666666666666`",",","0.6666666666666666`"}],"}"}],
+StandardForm],"Output",CellLabel -> "Out[233]= ",ExpressionUUID -> "da382a2b-3f38-48eb-a74e-f6d19768c0ad"],Cell[
+BoxData[
+RowBox[{"{",RowBox[{"0.`",",","0.184`",",","0.147`",",","0.669`"}],"}"}],StandardForm],
+"Output",CellLabel -> "Out[234]= ",ExpressionUUID -> "a0ab2536-e669-413c-8ac8-a06ac0e2e782"],Cell[
+BoxData[
+GraphicsBox[{{Opacity[0],PointBox[{{0.5415384615384615`,0.`},{8.230769230769232`,0.`}}]},{{},{{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{0.6923076923076923`,0.`},
+{1.4615384615384617`,0.`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.`]],TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{1.6923076923076925`,0.`},{2.4615384615384617`,0.`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.`]],
+TagBoxNote -> "0."],StyleBox["0.`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[Rational[1,3],0.3333333333333333`],
+NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[
+{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[
+1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{2.6153846153846154`,0.`},{3.3846153846153846`,0.184`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.184`]],
+TagBoxNote -> "0.184"],StyleBox["0.184`",{},StripOnInput -> False]],Function[Annotation[
+Slot[1],Style[0.184`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[Thickness[Small],
+Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[Rational[1,3],
+0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue[
+"MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},
+{}],RectangleBox[{3.6153846153846154`,0.`},{4.384615384615385`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{4.538461538461539`,0.`},
+{5.307692307692308`,0.147`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.147`]],TagBoxNote -> "0.147"],StyleBox["0.147`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.147`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{5.538461538461539`,0.`},{6.307692307692308`,0.16666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.16666666666666666`]],
+TagBoxNote -> "0.16666666666666666"],StyleBox["0.16666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.16666666666666666`,{}],"Tooltip"]]]}}},{},{}},{{},{{},{{Directive[
+EdgeForm[Directive[Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[NCache[
+Rational[1,3],0.3333333333333333`],NCache[Rational[1,3],0.3333333333333333`],1]],TagBox[
+TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[CurrentValue["MouseOver"],EdgeForm[
+{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[0.66`]}],{},{}],RectangleBox[{6.461538461538463`,0.`},
+{7.230769230769232`,0.669`},"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[
+StatusArea[Slot[1],0.669`]],TagBoxNote -> "0.669"],StyleBox["0.669`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.669`,{}],"Tooltip"]]]},{Directive[EdgeForm[Directive[
+Thickness[Small],Opacity[0.644`],GrayLevel[0]]],RGBColor[1,0.6666666666666666`,NCache[
+Rational[1,3],0.3333333333333333`]]],TagBox[TooltipBox[TagBox[TagBox[DynamicBox[{FEPrivate`If[
+CurrentValue["MouseOver"],EdgeForm[{GrayLevel[0.5`],AbsoluteThickness[1.5`],Opacity[
+0.66`]}],{},{}],RectangleBox[{7.461538461538463`,0.`},{8.230769230769232`,0.6666666666666666`},
+"RoundingRadius" -> 0]}],"DelayedMouseEffectStyle"],Function[StatusArea[Slot[1],0.6666666666666666`]],
+TagBoxNote -> "0.6666666666666666"],StyleBox["0.6666666666666666`",{},StripOnInput -> False]],
+Function[Annotation[Slot[1],Style[0.6666666666666666`,{}],"Tooltip"]]]}}},{},{}}},{},{}},{},{InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{1.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{1.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{2.076923076923077`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{2.076923076923077`,0.`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{3.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{3.`,0.184`}],ImageScaled[{0.5`,0}]],InsetBox[FormBox[
+StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.`,0.16666666666666666`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{4.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"HN[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{4.923076923076923`,0.147`}],ImageScaled[{0.5`,0}]],InsetBox[
+FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],Offset[{0,-4},{5.923076923076923`,0.`}],
+ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox["\"p[j]\"",{},StripOnInput -> False],
+TraditionalForm],Offset[{0,4},{5.923076923076923`,0.16666666666666666`}],ImageScaled[
+{0.5`,0}]],InsetBox[FormBox[StyleBox["1",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{6.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"HN[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{6.846153846153847`,0.669`}],
+ImageScaled[{0.5`,0}]],InsetBox[FormBox[StyleBox["2",{},StripOnInput -> False],TraditionalForm],
+Offset[{0,-4},{7.846153846153847`,0.`}],ImageScaled[{0.5`,1}]],InsetBox[FormBox[StyleBox[
+"\"p[j]\"",{},StripOnInput -> False],TraditionalForm],Offset[{0,4},{7.846153846153847`,0.6666666666666666`}],
+ImageScaled[{0.5`,0}]]},{},{},{StyleBox[{Antialiasing -> False,{Directive[Thickness[
+Tiny]],{LineBox[{{0.5415384615384615`,0.`},{8.384553846153846`,0.`}}]},StyleBox[{Directive[
+Thickness[Tiny]],StyleBox[{InsetBox[FormBox[TagBox["\"Outcome j\"",HoldForm],TraditionalForm],
+Offset[{9.999999999999998`,0.`},{8.23076923076923`,0.`}],NCache[ImageScaled[{0,Rational[
+1,2]}],ImageScaled[{0,0.5`}]],Automatic,{1,0}]},{{}},StripOnInput -> False]},{"GraphicsLabel"},
+StripOnInput -> False]},StyleBox[{{Directive[Thickness[Tiny]],LineBox[{{0.6923076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{0.6923076923076923`,0.`}]}],LineBox[{{8.23076923076923`,0.`},Offset[
+{-1.102182119232618`*^-15,-6.`},{8.23076923076923`,0.`}]}],{{},{},{},{},{},{},{},{},{},{},{},{},{LineBox[
+{{2.4615384615384617`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.4615384615384617`,0.`}]}],LineBox[
+{{2.615384615384615`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{2.615384615384615`,0.`}]}],LineBox[
+{{4.384615384615385`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.384615384615385`,0.`}]}],LineBox[
+{{4.538461538461538`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{4.538461538461538`,0.`}]}],LineBox[
+{{6.3076923076923075`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.3076923076923075`,0.`}]}],LineBox[
+{{6.461538461538462`,0.`},Offset[{-1.102182119232618`*^-15,-6.`},{6.461538461538462`,0.`}]}]}}},StyleBox[
+{},{"GraphicsLabel"},StripOnInput -> False]},{"GraphicsTicks"},StripOnInput -> False]},
+{"GraphicsAxes"},StripOnInput -> False]}},{DisplayFunction -> Identity,RuleDelayed[
+PlotInteractivity,True],DefaultBaseStyle -> {"PlotGraphics","Graphics"},AspectRatio -> NCache[
+Power[GoldenRatio,-1],0.6180339887498948`],Axes -> {False,True},AxesLabel -> {FormBox[
+TagBox["\"Outcome j\"",HoldForm],TraditionalForm],FormBox[TagBox["\"Probability\"",
+HoldForm],TraditionalForm]},AxesOrigin -> {0.5415384615384615`,0.`},CoordinatesToolOptions -> CompressedData[
+"1:eJxTTMoPSmNiYGAoZgESPpnFJQheUGlOajA/kOGSWVyQk1jpVpqXXJKZn5fGCFLBASTgIqgmwOU9U1LzSjJLKhHyAYlFUHkQLzgnvyQTxAMT5OgDKUBzsTCQ4ZxfkJmaEpaYU5o6WF0NAFk5TEk="],FrameLabel -> {{None,None},{None,None}},FrameTicks -> {{Automatic,Automatic},{Automatic,Automatic}},GridLines -> {None,None},GridLinesStyle -> Directive[
+GrayLevel[0.5`,0.4`]],PlotLabel -> FormBox["\"HN[j] vs. p[j] for N = 1000\"",TraditionalForm],PlotRange -> {{All,All},{All,All}},PlotRangePadding -> {{Scaled[
+0.02`],Scaled[0.02`]},{Scaled[0.02`],Scaled[0.05`]}},Ticks -> {None,Automatic}},ExpressionUUID -> "1a2a0a6c-35ab-4bc9-9ee6-15eae364b3ad"],
+StandardForm],"Output",CellLabel -> "Out[235]= ",ExpressionUUID -> "c31d566b-8bd2-41e8-baed-1a06e95fd938"]},
+Open],ExpressionUUID -> "52540e0e-8822-4b72-bfde-59c2ec62ed5d"],Cell[
+"\<\>","Text",
+ExpressionUUID -> "84296b4c-3a45-4223-8054-023d3e4b158c"],Cell[
+BoxData[RowBox[{}]],
+"Input",ExpressionUUID -> "844d5ede-3445-4257-9cda-356d2e0984ca"],Cell[
+"\<\>","Text",
+ExpressionUUID -> "94494a65-957e-4a53-a850-18e52bb7a9b7"]},StyleDefinitions -> "Default.nb",
+FrontEndVersion -> "14.3 for Wolfram Cloud 1.75 (December 9, 2025)"]
