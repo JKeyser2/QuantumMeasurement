@@ -4,7 +4,7 @@ Should be generalizable to work with any combination of quantum state and orthon
 
 Tested with 2 simple examples
 
-First example uses standard orthonormal basis
+First example uses standard orthonormal basis.
 Second example uses arbitrary orthonormal basis
 
 1. Have a quantum system with a quantum state
